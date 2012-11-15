@@ -1,6 +1,10 @@
 Fast and minimalistic Google Analytics client for Windows Phone 
-App has been published to Windows Phone Store and made open source
-http://www.windowsphone.com/en-us/store/app/analitika/0af400f1-5580-4d76-a7e0-4e5fb1df912d
+===============================================================
+
+
+App has been [published to Windows Phone Store](http://www.windowsphone.com/en-us/store/app/analitika/0af400f1-5580-4d76-a7e0-4e5fb1df912d)
+
+
 
 This application is MIT licensed:
  Copyright (C) 2012 Valentin Vasilyev
