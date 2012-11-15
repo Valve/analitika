@@ -1,0 +1,13 @@
+﻿1. Navigating - path (/o/oauth2/auth)
+2. Navigating - path (/ServiceLogin)
+3. Navigated  - path (/ServiceLogin) - User & password are shown - user signs in
+4. Navigating - path (/ServiceLoginAuth)
+5. Navigating - path (/ServiceLoginAuth)
+6. Navigating - path (/accounts/SetSID)
+7. Navigating - path (/accounts/SetSID)
+8. Navigating - path (/ServiceLogin)
+9. Navigating - path (/o/oauth2/auth)
+10. Navigating - path (/o/oauth2/auth)
+11. Navigated - path (/o/oauth2/auth) - Permission page shown - users allows or disallows
+12. Navigating - path(/o/oauth2/approval)
+13. Navigating - localhost - finish
