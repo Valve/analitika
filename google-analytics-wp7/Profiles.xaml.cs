@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Analitika.Data;
 using Analitika.Data.Extensions;
@@ -18,10 +19,10 @@ namespace Analitika {
       });
     }
 
-    private void OnProfileSelected(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+    private void OnProfileSelected(object sender, SelectionChangedEventArgs e) {
       if (profilesList.SelectedIndex < 0) return;
       var profile = (Profile)e.AddedItems[0];
-      var uri = new Uri("/Dashboard.xaml?profileId={0}&profileName={1}&webSiteUrl={2}".FormatWith(profile.id, profile.name, profile.webSiteUrl), UriKind.Relative);
+      var uri = new Uri("/Main.xaml?profileId={0}&profileName={1}&webSiteUrl={2}".FormatWith(profile.id, profile.name, profile.webSiteUrl), UriKind.Relative);
       NavigationService.Navigate(uri);
     }
   }

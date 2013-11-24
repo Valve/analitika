@@ -10,8 +10,8 @@ namespace Analitika {
     private Connection _connection;
     private Action<string> _oauthCallback = null;
 
-    private string _clientId = "";//TODO: here goes your clientId;
-    private string _clientSecret = "";//TODO: here goes your client secret;
+    private string _clientId = "15132115543.apps.googleusercontent.com";
+    private string _clientSecret = "1n6lLaVJQplUpzDcbSQUhVO4"; 
     public Auth() {
       InitializeComponent();
     }

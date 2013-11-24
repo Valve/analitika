@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using ServiceStack.Text;
 
@@ -14,12 +15,11 @@ namespace Analitika.Data {
     string _tokenPath = "/o/oauth2/token";
     string _scope = "https://www.googleapis.com/auth/analytics.readonly";
     string _redirectUri = HttpUtility.UrlEncode("http://localhost");
+    private readonly string _baseUrl = "https://www.googleapis.com/analytics/v3/data/ga";
     private string _clientId;
     private string _clientSecret;
-    private ConnectionState _state = ConnectionState.Closed;
     private AccessTokenResponse _accessTokenResponse = AccessTokenResponse.Empty;
     private ManagementApi _managementApi;
-    private ReportingApi _reportingApi;
     public event EventHandler<ConnectionOpenedEventArgs> ConnectionOpened;
 
     #endregion
@@ -35,17 +35,25 @@ namespace Analitika.Data {
 
     #region Properties
 
-    internal string AccessToken { get { return _accessTokenResponse.access_token; } }
-
-    public ConnectionState State { get { return _state; } }
-
     public ManagementApi ManagementApi { get { return _managementApi; } }
-
-    public ReportingApi ReportingApi { get { return _reportingApi; } }
 
     #endregion
 
     #region Methods
+
+    internal void ExecuteRawRequestAsync(string requestUrl, Action<string> onComplete) {
+      var request = HttpWebRequest.CreateHttp(requestUrl);
+      request.Headers["Authorization"] = string.Format("Bearer {0}", _accessTokenResponse.access_token;
+      request.BeginGetResponse(asyncResult=> {
+        var response = request.EndGetResponse(asyncResult);
+        string responseBody = null;
+        using(var streamReader = new StreamReader(response.GetResponseStream())){
+          responseBody = streamReader.ReadToEnd();
+        }
+        onComplete(responseBody);
+      }, null);
+    }
+
 
     public Action<string> OpenAsync(Action<Uri> oauthStartCallback) {
       Uri authenticationUri = BuildAuthenticationUri();
@@ -67,8 +75,6 @@ namespace Analitika.Data {
       webClient.UploadStringCompleted += (o, e) => {
         _accessTokenResponse = JsonSerializer.DeserializeFromString<AccessTokenResponse>(e.Result);
         _managementApi = new ManagementApi(this);
-        _reportingApi = new ReportingApi(this);
-        SetConnectionStateOpen();
         if (ConnectionOpened != null) {
           ConnectionOpened(this, new ConnectionOpenedEventArgs { Response = _accessTokenResponse });
         }
@@ -93,12 +99,7 @@ namespace Analitika.Data {
       return uriBuilder.Uri;
     }
 
-    private void SetConnectionStateOpen() {
-      _state = ConnectionState.Open;
-    }
     #endregion
 
   }
-
-  public enum ConnectionState { Closed, Open }
 }

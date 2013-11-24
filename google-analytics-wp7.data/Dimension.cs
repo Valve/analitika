@@ -4,9 +4,10 @@
 namespace Analitika.Data {
   public class Dimension {
     private readonly string _dimensionString;
-    public readonly Dimension Empty = new Dimension("");
-    public readonly Dimension Browser = new Dimension("ga:browser");
-    public readonly Dimension Date = new Dimension("ga:date");
+    public static readonly Dimension Empty = new Dimension("");
+    public static readonly Dimension Browser = new Dimension("ga:browser");
+    public static readonly Dimension Date = new Dimension("ga:date");
+    public static readonly Dimension PagePath = new Dimension("ga:pagepath");
 
     protected Dimension(string dimensionString) {
       _dimensionString = dimensionString;
@@ -37,6 +38,5 @@ namespace Analitika.Data {
     public override int GetHashCode() {
       return _dimensionString.GetHashCode();
     }
-
   }
 }
